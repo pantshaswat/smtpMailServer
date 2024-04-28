@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/smtp-server": "^3.5.10",
+    "mailparser": "^3.7.1",
+    "mongoose": "^8.3.2",
+    "nodemon": "^3.1.0",
+    "smtp-server": "^3.13.4"
+  }
 }

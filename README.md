@@ -23,5 +23,5 @@ DKIM record helps prevent spammer from impersonating a legitimate domain. It use
 #### These are some of the important records for checking for email authentication. Now, what to do after checking these records will be addressed by:
 
 ### DMARC record
-DMARC record determines what should be done if the email check fails in SPF or DKIM record. For such email we can set ```p=xyz``` in DMARC record where xyz can be ```quarantine```, ```none``` or ```reject```. Quarantine helps to keep such emails in spam, none will let those email arrive to inbox and reject will simply reject such emails.
+DMARC record determines what should be done if the email check fails in SPF or DKIM record. For such email we can set ```p=xyz``` in DMARC record where xyz can be ```quarantine```, ```none``` or ```reject```. Quarantine helps to keep such emails in spam, none will let those email arrive to inbox and reject will simply reject such emails. [More about DMARC record](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
 
