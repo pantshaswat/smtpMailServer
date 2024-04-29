@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const EmailSchema = new Mongoose.Schema({
+const EmailSchema = new mongoose.Schema({
     recipient:{
-        type: mongoose.Schema.type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:'user',
         required: true
     },
@@ -13,11 +13,18 @@ const EmailSchema = new Mongoose.Schema({
     subject:{
         type: String
         },
-    dateTime:{
+    html:{
         type: String
     },
     content:{
         type: String,
     }
-    }
-)
+    },
+ {
+    timestamps: true
+ }
+);
+
+const EmailModel = mongoose.model('emails',EmailSchema);
+
+module.exports = EmailModel;

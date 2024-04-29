@@ -12,9 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "@types/smtp-server": "^3.5.10",
+    "dkim": "^0.8.0",
+    "dotenv": "^16.4.5",
     "mailparser": "^3.7.1",
     "mongoose": "^8.3.2",
     "nodemon": "^3.1.0",
-    "smtp-server": "^3.13.4"
+    "smtp-server": "^3.13.4",
+    "spf-check": "^0.4.3"
   }
 }
