@@ -16,7 +16,12 @@
     "dotenv": "^16.4.5",
     "mailparser": "^3.7.1",
     "mongoose": "^8.3.2",
+    "nodemailer": "^6.9.13",
+    "nodemailer-direct-transport": "^3.3.2",
+    "nodemailer-smtp-pool": "^2.8.3",
+    "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^3.1.0",
+    "smtp-connection": "^4.0.2",
     "smtp-server": "^3.13.4",
     "spf-check": "^0.4.3"
   }

@@ -11,36 +11,43 @@ const server = new SMTPServer({
     authOptional: true,
     onConnect(session, callback) {
         console.log("Connected with s id: " + session.id);
-        return callback();
+        callback();
     },
     onMailFrom(address, session, callback) {
         console.log("Mail from: " + address.address);
-        return callback();
+  callback();
     },
-    onRcptTo: async function (address, session, callback) {
+    onRcptTo:  async function (address, session, callback) {
         const email = address.address;
         console.log('recptttt:' + email)
+       
+      
         try {
             const user = await UserModel.findOne({ email: email }).exec();
             if (!user) {
                 const error = new Error("Email doesn't exist in the server: " + email);
                 error.responseCode = 550;
-                return callback(error);
+               callback(error);
             }
             console.log("Sent to address: " + email);
-            return callback();
+            callback();
         } catch (err) {
             console.error("Error finding user:", err);
-            return callback(err);
+             callback(err);
         }
     },
+    onData(stream, session, callback) {
+        stream.pipe(process.stdout); // print message to console
+        stream.on("end", callback);
+      },
     onData: async function (stream, session, callback) {
         let message = "";
-
+        console.log('data aayo')
+        stream.pipe(process.stdout);
         async function processData() {
             try {
                 stream.on("data", (data) => {
-                    console.log('data incoming: '+ data.toString())
+                    
                     message += data.toString();
                 });
 
@@ -49,25 +56,40 @@ const server = new SMTPServer({
                         const parsedEmail = await simpleParser(message);
                         
                         // DKIM verification
-                        const dkimResult = await dkim.verify(parsedEmail.raw);
+                        // const dkimResult = await dkim.verify(parsedEmail.raw);
 
                         // SPF verification
-                        const spfResult = await spfCheck.check(parsedEmail.headers.get('Received-SPF'));
+                        // const spfResult = await spfCheck.check(parsedEmail.headers.get('Received-SPF'));
 
                         // If DKIM and SPF checks pass, save the email
-                        if (dkimResult && spfResult) {
+                        // if (dkimResult && spfResult) {
+                            
+                           try {
+                            const recipientEmail = session.envelope.rcptTo[0].address;
+                            const user = await UserModel.findOne({ email: recipientEmail }).exec();
+            if (!user) {
+                // If the user is not found, handle the error
+                const error = new Error("User not found for recipient email: " + recipientEmail);
+                error.responseCode = 550;
+                callback(error)
+            }
                             const emailData = {
-                                recipient: parsedEmail.to.text,
-                                sender: parsedEmail.from.text,
+                                recipient: user._id,
+                                sender: session.envelope.mailFrom.address,
                                 subject: parsedEmail.subject,
                                 html: parsedEmail.html,
                                 content: parsedEmail.text
                             };
                             await EmailModel.create(emailData);
-                            console.log("Email saved in the database");
-                        } else {
-                            console.error("DKIM or SPF check failed for the email");
-                        }
+                            console.log("Email saved in the database");}
+                            catch(err){
+                                const error = new Error("invaild email");
+                                error.responseCode = 550;
+                                callback(error);
+                            }
+                        // } else {
+                        //     console.error("DKIM or SPF check failed for the email");
+                        // }
 
                         callback(); 
                     } catch (err) {
