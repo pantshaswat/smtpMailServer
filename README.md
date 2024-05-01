@@ -10,17 +10,26 @@ Each smtp commands defines a SMTP session:\
 
 ### HELO/EHLO
 In initaites the SMTP session. It's like a client greeting the server. HELO command is followed by domain name or ip address of the SMTP client server.
-Example: ```HELO gmail.com```
+Example: 
+```bash
+HELO gmail.com
+```
 
 ### MAIL FROM
-It initiates the mail transfer. The MAIL FROM command is followed by the senders email address and give information to the server about the sender. Example: ```MAIL FROM: <example@gmail.com>```
+It initiates the mail transfer. The MAIL FROM command is followed by the senders email address and give information to the server about the sender. Example:
+ ```bash
+MAIL FROM: <example@gmail.com>
+```
 
 ### RCPT TO
-It specifies the recipient of the mail. The RCPT TO command is followed by the recipient email address. Example: ```RCPT TO: <recipient@hotmail.com>```
+It specifies the recipient of the mail. The RCPT TO command is followed by the recipient email address. Example: 
+```bash
+RCPT TO: <recipient@hotmail.com>
+```
 
 ### DATA
 It contains the date, subject, from, to, content text etc of the mail. The final line consist of ```.``` terminates the data transfer. Example: 
-```
+```bash
 DATA
 From: John Doe <example@gmail.com>
 To: Jane Doe <recipient@hotmail.com>
@@ -30,7 +39,18 @@ This is the body text
 ```
 
 ### QUIT
-It terminates the SMTP session. Server closes the channel with 221 response status then the client also closes the SMTP connection. Example: ```QUIT```
+It terminates the SMTP session. Server closes the channel with 221 response status then the client also closes the SMTP connection. Example: 
+```bash
+QUIT
+```
+<hr>
+<div>Here is the mail sent to this server running locally using telnet</div>
+<img src= './public/images/sender.png' width = '400'>
+  
+<hr>
+
+<img src= './public/images/received.png' width = '400'>
+
 
 ## Some DNS Records used in a mail server
 

@@ -19,7 +19,7 @@ const server = new SMTPServer({
     },
     onRcptTo:  async function (address, session, callback) {
         const email = address.address;
-        console.log('recptttt:' + email)
+        console.log('recpt:' + email)
        
       
         try {
