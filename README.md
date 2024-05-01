@@ -2,6 +2,35 @@
 
 This is a simple ```SMTP mail server``` made in nodejs to understand how SMTP mail servers work.
 It uses "smtp-server" package.
+## SMTP Commands
+Each smtp commands defines a SMTP session:\
+```handshake``` - establish TCP connection \
+```email transfer``` - manipulations with emails \
+```termination``` - closes TCP connection
+
+### HELO/EHLO
+In initaites the SMTP session. It's like a client greeting the server. HELO command is followed by domain name or ip address of the SMTP client server.
+Example: ```HELO gmail.com```
+
+### MAIL FROM
+It initiates the mail transfer. The MAIL FROM command is followed by the senders email address and give information to the server about the sender. Example: ```MAIL FROM: <example@gmail.com>```
+
+### RCPT TO
+It specifies the recipient of the mail. The RCPT TO command is followed by the recipient email address. Example: ```RCPT TO: <recipient@hotmail.com>```
+
+### DATA
+It contains the date, subject, from, to, content text etc of the mail. The final line consist of ```.``` terminates the data transfer. Example: 
+```
+DATA
+From: John Doe <example@gmail.com>
+To: Jane Doe <recipient@hotmail.com>
+Subject: This is smtp mail
+This is the body text
+.
+```
+
+### QUIT
+It terminates the SMTP session. Server closes the channel with 221 response status then the client also closes the SMTP connection. Example: ```QUIT```
 
 ## Some DNS Records used in a mail server
 
