@@ -7,10 +7,10 @@
 var SMTPConnection = require('smtp-connection');
 
 var connectionConfig = {
-    host: 'localhost', // remote SMTP server address
-    port: 25,
-    ignoreTLS: true,
+    host: 'smtp.gmail.com',
+    port: 587,
     secure: false,
+    requireTLS: true,
 
     
     //debug: true,
@@ -19,18 +19,18 @@ var connectionConfig = {
 };
 
 var connectionAuth = {
-	user: 'username',
-	pass: 'password'
+	user: 'pantshaswat@gmail.com',
+	pass: 'your pass'
 };
 
 var sender = {
-	name: 'shaswat pant', // please use [a-zA-Z0-9.- ]
-	email: 'me@sender.com'
+	name: 'Shaswat Pant', // please use [a-zA-Z0-9.- ]
+	email: 'pantshaswat@gmail.com'
 };
 
 var recipient = {
-	name: 'Test recipient', // please use [a-zA-Z0-9.- ]
-	email: 'test@recipient.net'
+	name: 'Shaswat Pant', // please use [a-zA-Z0-9.- ]
+	email: 'pantshaswat61@gmail.com'
 };
 
 // below you don't have to configure anything
@@ -46,17 +46,26 @@ var testMsg = 'From: '+sender.name+' <'+sender.email+'>\r\n'
 var connection = new SMTPConnection(connectionConfig);
 
 connection.connect(function() {
-	console.log('Connected');
-	
-	
-			connection.send({
-				from: sender.email,
-				to: recipient.email
-			}, testMsg, function(err) {
-				console.log('Message sent');
-				connection.quit();
-			});
-		
+    console.log('Connected');
+    
+    connection.login(connectionAuth, function(err) {
+        if (err) {
+            console.log('Authentication failed:', err);
+            return;
+        }
+        
+        connection.send({
+            from: sender.email,
+            to: recipient.email
+        }, testMsg, function(err) {
+            if (err) {
+                console.log('Failed to send email:', err);
+            } else {
+                console.log('Message sent');
+            }
+            connection.quit();
+        });
+    });
 });
 
 // works only if connectionConfig.debug === true
